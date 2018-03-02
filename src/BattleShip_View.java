@@ -154,12 +154,12 @@ public class BattleShip_View {
         List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("/Users/mohammad/Documents/GitHub/BattleShip/src/feldBattle");
 
 
-        List<List<BattleChar>> battleFeld_ba = new ShipPlacer().askPlayerForShips();
-        List<List<BattleChar>> battleFeld_bab = new ShipPlacer().askPlayerForShips();
+        List<List<BattleChar>> battleFeld_aa = new ShipPlacer().askPlayerForShips();
+        List<List<BattleChar>> battleFeld_bb = new ShipPlacer().askPlayerForShips();
 
 
-        BattleShip_Logic logic_a = new BattleShip_Logic(battleFeld_ba);
-        BattleShip_Logic logic_b = new BattleShip_Logic(battleFeld_bab);
+        BattleShip_Logic logic_a = new BattleShip_Logic(battleFeld_aa);
+        BattleShip_Logic logic_b = new BattleShip_Logic(battleFeld_bb);
 
         Player player_a = new Player(logic_a);
         Player player_b = new Player(logic_b);
