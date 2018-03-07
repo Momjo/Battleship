@@ -1,5 +1,8 @@
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -19,13 +22,16 @@ public class BattleShip_View {
         this.player_a = player_a;
         this.player_b = player_b;
 
-
     }
 
 
     public void printBoard(Player shooter, Player target) {
-        System.out.println("      A    B    C    D    E    F    G    H    I    J");
-        System.out.println("------------------------------------------------------ ");
+
+        String boardBorder = "------------------------------------------------------ ";
+        String header = "      A    B    C    D    E    F    G    H    I    J";
+
+        System.out.println(header);
+        System.out.println(boardBorder);
         int zahl = -1;
         for (int row = 0; row < 10; row++) {
             zahl++;
@@ -39,7 +45,9 @@ public class BattleShip_View {
                 }
             }
         }
-        System.out.println("------------------------------------------------------ ");
+        System.out.println(boardBorder);
+
+
     }
 
     public String printPlayerCell(Coordinates coordinates, Player shooter, Player target) {
@@ -123,10 +131,10 @@ public class BattleShip_View {
                 shooter = player_b;
                 target = player_a;
             }
-
-            System.out.println("******************************************************");
+            String nameBorderStyle = "******************************************************";
+            System.out.println(nameBorderStyle);
             System.out.println("* " + shooter.name + ", your move!");
-            System.out.println("******************************************************");
+            System.out.println(nameBorderStyle);
             printBoard(shooter, target);
             Coordinates coordinates = getPlayerMove(shooter);
             boolean getroffen = doMove(shooter, target, coordinates);
@@ -149,9 +157,12 @@ public class BattleShip_View {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        List<List<BattleChar>> battleFeld_a = new BattleFeldFileLoader().loadFromFile("/Users/mohammad/Documents/GitHub/BattleShip/src/feldBattle");
-        List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("/Users/mohammad/Documents/GitHub/BattleShip/src/feldBattle");
+
+
+    public static void main(String[] args) throws IOException ,NullPointerException {
+      //  List<List<BattleChar>> battleFeld_a = new BattleFeldFileLoader().loadFromFile("src/feldBattle");
+       // List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("src/feldBattle");
+
 
 
         List<List<BattleChar>> battleFeld_aa = new ShipPlacer().askPlayerForShips();
@@ -165,6 +176,7 @@ public class BattleShip_View {
         Player player_b = new Player(logic_b);
 
         BattleShip_View bv = new BattleShip_View(player_a, player_b);
+
         bv.updatePlayerName(bv.player_a);
         bv.updatePlayerName(bv.player_b);
 

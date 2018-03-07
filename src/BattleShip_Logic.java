@@ -50,8 +50,6 @@ public class BattleShip_Logic {
         return null;
     }
 
-    // write a test for this method !!!!!
-
     public void markFieldAsShotAt(Coordinates coordinates) {
         previousMoves.add(coordinates);
     }
