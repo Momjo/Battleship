@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +8,10 @@ import java.util.List;
 public class BattleFeldFileLoader {
 
     public List<List<BattleChar>> loadFromFile(String filename) throws IOException {
-        List<String> lines = this.loadFile(filename);
+
+        String absolutePath = new File(filename).getAbsolutePath();
+
+        List<String> lines = this.loadFile(absolutePath);
         List<List<BattleChar>> battleFeld = new ArrayList<>();
 
         for (int l = 0; l < lines.size(); l++) {
