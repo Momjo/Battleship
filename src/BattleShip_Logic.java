@@ -8,8 +8,24 @@ public class BattleShip_Logic {
     private final List<List<BattleChar>> battleFeld;
     private final Set<Coordinates> previousMoves = new HashSet<>();
 
-    public BattleShip_Logic(List<List<BattleChar>> battleFeld)  {
+    public BattleShip_Logic(List<List<BattleChar>> battleFeld) {
+
         this.battleFeld = battleFeld;
+
+        for (int a = 0; a < rows(); a++) {
+            if (battleFeld.get(a).size() != columns()) {
+                throw new RuntimeException("Buuum");
+            }
+        }
+
+    }
+
+    public int rows() {
+        return battleFeld.size();
+    }
+
+    public int columns() {
+        return battleFeld.get(0).size();
     }
 
     public BattleChar get(Coordinates coordinates) {
@@ -56,7 +72,7 @@ public class BattleShip_Logic {
 
     public void markAdjacentFieldsAsShotAt(Set<Coordinates> coodinates) {
 
-        for (Coordinates cc: coodinates) {
+        for (Coordinates cc : coodinates) {
             int rowUp = cc.row;
             int rowDown = cc.row;
             int colRight = cc.column;
@@ -65,13 +81,13 @@ public class BattleShip_Logic {
             if (cc.row - 1 != -1) {
                 rowUp = rowUp - 1;
             }
-            if (cc.row + 1 != 10) {
+            if (cc.row + 1 != rows()) {
                 rowDown = rowDown + 1;
             }
             if (cc.column - 1 != -1) {
                 colLeft = colLeft - 1;
             }
-            if (cc.column + 1 != 10) {
+            if (cc.column + 1 != columns()) {
                 colRight = colRight + 1;
             }
 
@@ -104,11 +120,11 @@ public class BattleShip_Logic {
         while (true) {
             col++;
             Coordinates cor = new Coordinates(c.row, col);
-            if (col == 10) {
+            if (col == columns()) {
                 return result;
-            } else if (target.isFieldEmpty(c)) {
+            } else if (target.isFieldEmpty(cor)) {
                 return result;
-            } else if (target.hasShipAt(c) && !previousMoves.contains(cor)) {
+            } else if (target.hasShipAt(cor) && !previousMoves.contains(cor)) {
                 return null;
             }
             result.add(cor);
@@ -158,7 +174,7 @@ public class BattleShip_Logic {
         while (true) {
             row++;
             Coordinates cor = new Coordinates(row, c.column);
-            if (row == 10) {
+            if (row == rows()) {
                 return result;
             } else if (target.isFieldEmpty(cor)) {
                 return result;
