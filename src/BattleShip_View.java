@@ -169,8 +169,8 @@ public class BattleShip_View {
          * load default Battle field
          */
 
-        List<List<BattleChar>> battleFeld_a = new BattleFeldFileLoader().loadFromFile("src/FirstPlayerBattleField");
-        List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("src/SecondPlayerBattleField");
+        List<List<BattleChar>> battleFeld_a = new BattleFeldFileLoader().loadFromFile("FirstPlayerBattleField");
+        List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("SecondPlayerBattleField");
 
 
         /*
