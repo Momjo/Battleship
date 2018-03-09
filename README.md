@@ -11,7 +11,7 @@ Should install JUnit and set JUnit to CLASSPATH
 
 **Go to project folder:**
 ```bash
-> cd .../Battleship
+> cd .../Battleship/src
 ```
 **To load the default Battle field recomment this lines in BattleShip.java on Main method:**
 ```bash
