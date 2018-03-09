@@ -16,6 +16,9 @@ public class ShipPlacer {
         }
     }
 
+    private final int columns = 10;
+    private final int rows = 10;
+
     private int anzahl_Schlachtschiff = 1;
     private int anzahl_Kreuzer = 2;
     private int anzahl_Zerstörer = 3;
@@ -37,7 +40,7 @@ public class ShipPlacer {
     public List<List<BattleChar>> askPlayerForShips() {
         String nameBorderStyle = "******************************************************";
         System.out.println(nameBorderStyle);
-        System.out.println("* " + "" + ", create your battle feld!");
+        System.out.println("* " + "create your battle feld!");
         System.out.println(nameBorderStyle);
 
         for (int row = 0; row < 10; row++) {
@@ -57,7 +60,7 @@ public class ShipPlacer {
     private void gamePlayLoop() {
 
 
-        while (Ship.SCHLACHTSCHIFF.länge != 0 && Ship.KREUZER.länge != 0&& Ship.ZERSTÖRER.länge != 0 && Ship.UBOOT.länge != 0 ) {
+        while (anzahl_Schlachtschiff + anzahl_Kreuzer + anzahl_Zerstörer + anzahl_U_Boote != 0) {
 
             System.out.println("So viele Schiffe sind übrig:");
             System.out.println("\t1: Schlachtschiff( 4 kästchen ), anzahl: " + anzahl_Schlachtschiff);
@@ -85,29 +88,35 @@ public class ShipPlacer {
     }
 
     private boolean checkToAddShip() {
-        Ship ship = askToAQddShipOnField();
+        Ship ship = askToAddShipOnField();
 
         Coordinates cor = shiffStartPunkt();
         Set<Coordinates> shipCoordinates;
 
 
         if (ship.länge == 1) {
-            BattleChar set = battleFeld.get(cor.row).set(cor.column, BattleChar.X);
-            schiffeAnzahlVermindern(ship);
-            return true;
-        }
-        Direction richtung = welcheRichtung();
-        shipCoordinates = getShipCoordinates(cor, ship.länge, richtung);
-        if (shipCoordinates == null) {
+            if (areAllAdjacentCellsEmpty(cor)) {
+
+                battleFeld.get(cor.row).set(cor.column, BattleChar.X);
+                schiffeAnzahlVermindern(ship);
+                return true;
+            }
             return false;
         } else {
 
-            for (Coordinates c : shipCoordinates) {
-                BattleChar set = battleFeld.get(c.row).set(c.column, BattleChar.X);
-            }
-            schiffeAnzahlVermindern(ship);
+            Direction richtung = welcheRichtung();
+            shipCoordinates = getShipCoordinates(cor, ship.länge, richtung);
+            if (shipCoordinates == null) {
+                return false;
+            } else {
 
-            return true;
+                for (Coordinates c : shipCoordinates) {
+                    battleFeld.get(c.row).set(c.column, BattleChar.X);
+                }
+                schiffeAnzahlVermindern(ship);
+
+                return true;
+            }
         }
     }
 
@@ -116,11 +125,11 @@ public class ShipPlacer {
         if ((a == 1 && anzahl_Schlachtschiff == 0) || (a == 2 && anzahl_Kreuzer == 0) || (a == 3 && anzahl_Zerstörer == 0) || (a == 4 && anzahl_U_Boote == 0)) {
 
             System.out.println("Von dem ausgewälten Schiff ist nichts mehr übrig");
-            askToAQddShipOnField();
+            askToAddShipOnField();
         }
     }
 
-    private Ship askToAQddShipOnField() {
+    private Ship askToAddShipOnField() {
 
 
         System.out.print("\nWas für ein Schiff soll eingefügt werden soll:");
@@ -186,7 +195,7 @@ public class ShipPlacer {
             }
         }
         if (direction == Direction.RIGHT) {
-            if (cor.column + length < 10) {
+            if (cor.column + length <= 10) {
                 return true;
             }
         }
@@ -196,7 +205,7 @@ public class ShipPlacer {
             }
         }
         if (direction == Direction.DOWN) {
-            if (cor.row + length < 10) {
+            if (cor.row + length <= 10) {
                 return true;
             }
         }
@@ -206,8 +215,8 @@ public class ShipPlacer {
 
     private Set<Coordinates> getShipCoordinates(Coordinates start, int length, Direction direction) {
         Set<Coordinates> shipCoordinates = new HashSet<>();
-        for (int i = 1; i < length; i++) {
-            if (lookIfThereIsEnoughSpace(direction, start, length)) {
+        if (lookIfThereIsEnoughSpace(direction, start, length)) {
+            for (int i = 1; i < length; i++) {
 
                 if (areAllAdjacentCellsEmpty(start)) {
 
@@ -228,10 +237,10 @@ public class ShipPlacer {
                 } else {
                     return null;
                 }
-            } else {
-                return null;
-            }
             shipCoordinates.add(start);
+            }
+        } else {
+            return null;
         }
         return shipCoordinates;
     }
@@ -282,7 +291,7 @@ public class ShipPlacer {
     }
 
     public void printBoard() {
-        String boardBorder = "------------------------------------------------------ ";
+        String boardBorder = "----------------------------------------------------- ";
         String header = "      A    B    C    D    E    F    G    H    I    J";
         System.out.println(header);
         System.out.println(boardBorder);
@@ -292,7 +301,9 @@ public class ShipPlacer {
             System.out.print(zahl + " | ");
             for (int column = 0; column < 10; column++) {
 
+
                 System.out.print("  " + battleFeld.get(row).get(column) + "  ");
+
                 if (column == 9) {
                     System.out.print("\n");
                 }

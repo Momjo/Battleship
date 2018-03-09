@@ -1,8 +1,6 @@
 
-import java.io.File;
+
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -17,10 +15,16 @@ public class BattleShip_View {
     private Player player_a;
     private Player player_b;
 
-    public BattleShip_View(Player player_a, Player player_b) {
+    private int fieldRows;
+    private int fieldColumns;
+
+
+    public BattleShip_View(Player player_a, Player player_b, int fieldRows, int fieldColumns) {
 
         this.player_a = player_a;
         this.player_b = player_b;
+        this.fieldRows = fieldRows;
+        this.fieldColumns = fieldColumns;
 
     }
 
@@ -30,13 +34,14 @@ public class BattleShip_View {
         String boardBorder = "------------------------------------------------------ ";
         String header = "      A    B    C    D    E    F    G    H    I    J";
 
+
         System.out.println(header);
         System.out.println(boardBorder);
         int zahl = -1;
-        for (int row = 0; row < 10; row++) {
+        for (int row = 0; row < this.fieldRows; row++) {
             zahl++;
             System.out.print(zahl + " | ");
-            for (int column = 0; column < 10; column++) {
+            for (int column = 0; column < this.fieldColumns; column++) {
                 Coordinates coordinates = new Coordinates(row, column);
                 String s = printPlayerCell(coordinates, shooter, target);
                 System.out.print("  " + s + "  ");
@@ -71,7 +76,7 @@ public class BattleShip_View {
 
     public Coordinates stringToCoordinates(String move) {
 
-        int column = Character.getNumericValue(move.charAt(0)) - 10;
+        int column = Character.getNumericValue(move.charAt(0)) - this.fieldColumns;
         int row = Character.getNumericValue(move.charAt(1));
         return new Coordinates(row, column);
     }
@@ -106,8 +111,8 @@ public class BattleShip_View {
 
     private boolean isGameOver() {
         Set<Coordinates> schiffeImSpiel = new HashSet<>();
-        for (int row = 0; row < 10; row++) {
-            for (int column = 0; column < 10; column++) {
+        for (int row = 0; row < this.fieldRows; row++) {
+            for (int column = 0; column < this.fieldColumns; column++) {
                 Coordinates coordinates = new Coordinates(row, column);
                 if (this.player_a.hasShipAt(coordinates) || this.player_b.hasShipAt(coordinates)) {
                     schiffeImSpiel.add(coordinates);
@@ -158,31 +163,37 @@ public class BattleShip_View {
     }
 
 
+    public static void main(String[] args) throws IOException  {
 
-    public static void main(String[] args) throws IOException ,NullPointerException {
-      //  List<List<BattleChar>> battleFeld_a = new BattleFeldFileLoader().loadFromFile("src/feldBattle");
-       // List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("src/feldBattle");
+        /*
+         * load default Battle field
+         */
+
+        List<List<BattleChar>> battleFeld_a = new BattleFeldFileLoader().loadFromFile("src/FirstPlayerBattleField");
+        List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("src/SecondPlayerBattleField");
 
 
+        /*
+         * set your custom Battle field
+         */
 
-        List<List<BattleChar>> battleFeld_aa = new ShipPlacer().askPlayerForShips();
-        List<List<BattleChar>> battleFeld_bb = new ShipPlacer().askPlayerForShips();
+        //List<List<BattleChar>> battleFeld_a = new ShipPlacer().askPlayerForShips();
+        //List<List<BattleChar>> battleFeld_b = new ShipPlacer().askPlayerForShips();
 
 
-        BattleShip_Logic logic_a = new BattleShip_Logic(battleFeld_aa);
-        BattleShip_Logic logic_b = new BattleShip_Logic(battleFeld_bb);
+        BattleShip_Logic logic_a = new BattleShip_Logic(battleFeld_a);
+        BattleShip_Logic logic_b = new BattleShip_Logic(battleFeld_b);
 
         Player player_a = new Player(logic_a);
         Player player_b = new Player(logic_b);
 
-        BattleShip_View bv = new BattleShip_View(player_a, player_b);
+        BattleShip_View bv = new BattleShip_View(player_a, player_b, player_a.rows(), player_a.columns());
 
         bv.updatePlayerName(bv.player_a);
         bv.updatePlayerName(bv.player_b);
 
         bv.gameLoop();
+
     }
-
-
 
 }

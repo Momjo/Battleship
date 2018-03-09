@@ -26,7 +26,7 @@ class BattleShip_ViewTest {
             e.printStackTrace();
         }
     }
-    BattleShip_View vv = new BattleShip_View(player_a, player_b);
+    BattleShip_View vv = new BattleShip_View(player_a, player_b, player_a.rows(), player_a.columns());
 
     @Test
     @DisplayName("Print Board")

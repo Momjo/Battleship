@@ -28,4 +28,8 @@ public class Coordinates {
         return same_column && same_row;
     }
 
+    public int hashCode() {
+        return row * column;
+    }
+
 }

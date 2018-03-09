@@ -34,7 +34,18 @@ public class Player {
     public void markFieldAsShotAt(Coordinates coordinates) {
         logic.markFieldAsShotAt(coordinates);
     }
+
     public void markAdjacentFieldsAsShotAt(Set<Coordinates> coordinates) {
         logic.markAdjacentFieldsAsShotAt(coordinates);
     }
+
+    public int rows() {
+        return logic.rows();
+    }
+
+    public int columns() {
+        return logic.columns();
+    }
+
+
 }
