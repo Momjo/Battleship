@@ -69,7 +69,7 @@ public class BattleShip_View {
 
 
     private void updatePlayerName(Player p) {
-        System.out.print("Name der erste Spieler: ");
+        System.out.print("Name des ersten Spielers: ");
         p.name = scanner.next();
     }
 
@@ -92,10 +92,10 @@ public class BattleShip_View {
             move = scanner.next();
             isMatch = Pattern.matches(pattern, move);
             if (isMatch == false) {
-                System.out.println("Wrong, try again :)");
+                System.out.println("Falsche Eingabe, probier's nochmal :)");
 
             } else if (player.hasPreviouslyShotAt(stringToCoordinates(move))) {
-                System.out.println("du hast da schon geschossen\n");
+                System.out.println("Du hast es dort schon versucht!\n");
                 isMatch = false;
             }
         } while (!isMatch);
@@ -138,14 +138,14 @@ public class BattleShip_View {
             }
             String nameBorderStyle = "******************************************************";
             System.out.println(nameBorderStyle);
-            System.out.println("* " + shooter.name + ", your move!");
+            System.out.println("* " + shooter.name + ", du bist dran!");
             System.out.println(nameBorderStyle);
             printBoard(shooter, target);
             Coordinates coordinates = getPlayerMove(shooter);
             boolean getroffen = doMove(shooter, target, coordinates);
 
             if (getroffen) {
-                System.out.println("getroffen");
+                System.out.println("Getroffen");
                 Set<Coordinates> shipCoordinates = shooter.hitsEntireShipSunk(coordinates, target);
                 if (shipCoordinates != null) {
                     System.out.println("...und versenkt!");
@@ -154,7 +154,7 @@ public class BattleShip_View {
                 }
 
             } else {
-                System.out.println("nicht getroffen");
+                System.out.println("Nicht getroffen!");
                 zahlt++;
             }
 
