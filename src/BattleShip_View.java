@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class BattleShip_View {
 
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
     private Player player_a;
     private Player player_b;
@@ -69,7 +69,7 @@ public class BattleShip_View {
 
 
     private void updatePlayerName(Player p) {
-        System.out.print("Name des ersten Spielers: ");
+        System.out.print("\n**** Name der Spieler: ");
         p.name = scanner.next();
     }
 
@@ -163,22 +163,25 @@ public class BattleShip_View {
     }
 
 
-    public static void main(String[] args) throws IOException  {
-
-        /*
-         * load default Battle field
-         */
-
-        List<List<BattleChar>> battleFeld_a = new BattleFeldFileLoader().loadFromFile("FirstPlayerBattleField");
-        List<List<BattleChar>> battleFeld_b = new BattleFeldFileLoader().loadFromFile("SecondPlayerBattleField");
+    public static void main(String[] args) throws IOException {
 
 
-        /*
-         * set your custom Battle field
-         */
+        List<List<BattleChar>> battleFeld_a = null;
+        List<List<BattleChar>> battleFeld_b = null;
+        int loadOrCreate;
 
-        //List<List<BattleChar>> battleFeld_a = new ShipPlacer().askPlayerForShips();
-        //List<List<BattleChar>> battleFeld_b = new ShipPlacer().askPlayerForShips();
+        do {
+            System.out.print("\n** Type '1' to load the default Battlefield or type '2'to create your Battlefield:  ");
+            loadOrCreate = scanner.nextInt();
+        } while (loadOrCreate > 2);
+
+        if (loadOrCreate == 1) {
+            battleFeld_a = new BattleFeldFileLoader().loadFromFile("Battleship/src/FirstPlayerBattleField");
+            battleFeld_b = new BattleFeldFileLoader().loadFromFile("Battleship/src/SecondPlayerBattleField");
+        } else if (loadOrCreate == 2) {
+            battleFeld_a = new ShipPlacer().askPlayerForShips();
+            battleFeld_b = new ShipPlacer().askPlayerForShips();
+        }
 
 
         BattleShip_Logic logic_a = new BattleShip_Logic(battleFeld_a);

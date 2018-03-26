@@ -40,7 +40,7 @@ public class ShipPlacer {
     public List<List<BattleChar>> askPlayerForShips() {
         String nameBorderStyle = "******************************************************";
         System.out.println(nameBorderStyle);
-        System.out.println("* " + "create your battle field!");
+        System.out.println("* " + "create your Battlefield!");
         System.out.println(nameBorderStyle);
 
         for (int row = 0; row < 10; row++) {
