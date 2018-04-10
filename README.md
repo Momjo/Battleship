@@ -9,6 +9,10 @@ Should install JUnit and set JUnit to CLASSPATH
 
 ### Run
 
+**Use [releases](https://github.com/vdurmont/emoji-java/releases) tab to download the jar directly.**
+
+**OR...**
+
 **Go to project folder:**
 ```bash
 > cd .../Battleship/src
