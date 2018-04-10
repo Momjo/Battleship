@@ -9,7 +9,7 @@ Should install JUnit and set JUnit to CLASSPATH
 
 ### Run
 
-**Use [releases](https://github.com/vdurmont/emoji-java/releases) tab to download the jar directly.**
+**Use [releases](https://github.com/Momjo/Battleship/releases) tab to download the jar directly.**
 
 **OR...**
 
