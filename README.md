@@ -9,7 +9,7 @@ Should install JUnit and set JUnit to CLASSPATH
 
 ### Run
 
-***Use [releases](https://github.com/Momjo/Battleship/releases) tab to download the jar directly.***
+**Use [releases](https://github.com/Momjo/Battleship/releases) tab to download the jar directly.**
 
 **OR...**
 
@@ -28,4 +28,4 @@ Should install JUnit and set JUnit to CLASSPATH
   180: List<List<BattleChar>> battleFeld_b = new ShipPlacer().askPlayerForShips();
 ```
 
-**then run the BattleShip_View.java**
+then run the BattleShip_View.java
