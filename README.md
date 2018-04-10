@@ -27,10 +27,3 @@ Should install JUnit and set JUnit to CLASSPATH
   180: List<List<BattleChar>> battleFeld_a = new ShipPlacer().askPlayerForShips();
   180: List<List<BattleChar>> battleFeld_b = new ShipPlacer().askPlayerForShips();
 ```
-![asdas]()
-
-**Run the .jar file:**
-
-```bash
-> java -jar Battleship.jar
-```
