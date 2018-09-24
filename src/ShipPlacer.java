@@ -62,13 +62,13 @@ public class ShipPlacer {
 
         while (anzahl_Schlachtschiff + anzahl_Kreuzer + anzahl_Zerstörer + anzahl_U_Boote != 0) {
 
-            System.out.println("Verbleibende Schiffe:");
-            System.out.println("\t1: Schlachtschiff( 4 Kästchen ), Anzahl: " + anzahl_Schlachtschiff);
-            System.out.println("\t2: Schlachtschiff( 3 Kästchen ), Anzahl: " + anzahl_Kreuzer);
-            System.out.println("\t3: Schlachtschiff( 2 Kästchen ), Anzahl: " + anzahl_Zerstörer);
-            System.out.println("\t4: Schlachtschiff( 1 Kästchen ), Anzahl: " + anzahl_U_Boote);
+            System.out.println("Remaining ships:");
+            System.out.println("\t1: Battleship( 4 box ), quantity: " + anzahl_Schlachtschiff);
+            System.out.println("\t2: Battleship( 3 box ), quantity: " + anzahl_Kreuzer);
+            System.out.println("\t3: Battleship( 2 box ), quantity: " + anzahl_Zerstörer);
+            System.out.println("\t4: Battleship( 1 box ), quantity: " + anzahl_U_Boote);
             if (!checkToAddShip()) {
-                System.out.println("\nSchiff konnte nicht eingefügt werden");
+                System.out.println("\nShip could not be inserted");
 
             }
             printBoard();
@@ -124,7 +124,7 @@ public class ShipPlacer {
     private void noShipMore(int a) {
         if ((a == 1 && anzahl_Schlachtschiff == 0) || (a == 2 && anzahl_Kreuzer == 0) || (a == 3 && anzahl_Zerstörer == 0) || (a == 4 && anzahl_U_Boote == 0)) {
 
-            System.out.println("Von dem ausgewählten Schiff ist nichts mehr übrig");
+            System.out.println("There is nothing left of the selected ship");
             askToAddShipOnField();
         }
     }
@@ -132,7 +132,7 @@ public class ShipPlacer {
     private Ship askToAddShipOnField() {
 
 
-        System.out.print("\nWas für ein Schiff soll eingefügt werden soll:");
+        System.out.print("\nWhat kind of ship should be inserted:");
 
         int ausgewähltes_Schiff = scanner.nextInt();
 
