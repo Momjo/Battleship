@@ -157,7 +157,7 @@ public class ShipPlacer {
         boolean isMatch;
         String move;
         do {
-            System.out.print("\nWo Soll das Schiff Startpunkt sein?");
+            System.out.print("\nWhere should the ship be starting point?");
             move = scanner.next();
             isMatch = Pattern.matches(pattern, move);
             if (isMatch == false) {
@@ -172,7 +172,7 @@ public class ShipPlacer {
 
     private Direction welcheRichtung() {
 
-        System.out.print("\nWelche Richtung (l = Left, r = Right, u = Up, d = Down): ");
+        System.out.print("\nWhich direction (l = Left, r = Right, u = Up, d = Down): ");
         char richtung = scanner.next().charAt(0);
 
         if (richtung == 108) {

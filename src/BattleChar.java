@@ -18,7 +18,7 @@ public enum BattleChar {
         } else if (c == 'o') {
             return BattleChar.X;
         } else {
-            throw new RuntimeException("Unerwarteter Wert!");
+            throw new RuntimeException("Unexpected value!");
         }
     }
 

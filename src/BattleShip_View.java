@@ -75,9 +75,9 @@ public class BattleShip_View {
             move = scanner.next();
             isMatch = Pattern.matches(pattern, move);
             if (isMatch == false) {
-                System.out.println("Falsche Eingabe, probier's nochmal :)");
+                System.out.println("Wrong input, try again :)");
             } else if (player.hasPreviouslyShotAt(stringToCoordinates(move))) {
-                System.out.println("Du hast es dort schon versucht!\n");
+                System.out.println("You have already tried it there!\n");
                 isMatch = false;
             }
         } while (!isMatch);
@@ -116,20 +116,20 @@ public class BattleShip_View {
             }
             String nameBorderStyle = "******************************************************";
             System.out.println(nameBorderStyle);
-            System.out.println("* " + shooter.name + ", du bist dran!");
+            System.out.println("* " + shooter.name + ", it's your turn!");
             System.out.println(nameBorderStyle);
             printBoard(shooter, target);
             Coordinates coordinates = getPlayerMove(shooter);
             boolean getroffen = doMove(shooter, target, coordinates);
             if (getroffen) {
-                System.out.println("Getroffen");
+                System.out.println("Met");
                 Set<Coordinates> shipCoordinates = shooter.hitsEntireShipSunk(coordinates, target);
                 if (shipCoordinates != null) {
-                    System.out.println("...und versenkt!");
+                    System.out.println("...and sunk!");
                     shooter.markAdjacentFieldsAsShotAt(shipCoordinates);
                 }
             } else {
-                System.out.println("Nicht getroffen!");
+                System.out.println("Not hit!");
                 zahlt++;
             }
             printBoard(shooter, target);
