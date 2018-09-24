@@ -1,10 +1,5 @@
-
-
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 
@@ -18,22 +13,17 @@ public class BattleShip_View {
     private int fieldRows;
     private int fieldColumns;
 
-
     public BattleShip_View(Player player_a, Player player_b, int fieldRows, int fieldColumns) {
-
         this.player_a = player_a;
         this.player_b = player_b;
         this.fieldRows = fieldRows;
         this.fieldColumns = fieldColumns;
-
     }
-
 
     public void printBoard(Player shooter, Player target) {
 
         String boardBorder = "------------------------------------------------------ ";
         String header = "      A    B    C    D    E    F    G    H    I    J";
-
 
         System.out.println(header);
         System.out.println(boardBorder);
@@ -51,8 +41,6 @@ public class BattleShip_View {
             }
         }
         System.out.println(boardBorder);
-
-
     }
 
     public String printPlayerCell(Coordinates coordinates, Player shooter, Player target) {
@@ -67,33 +55,27 @@ public class BattleShip_View {
         }
     }
 
-
-    private void updatePlayerName(Player p) {
-        System.out.print("\n**** Name der Spieler: ");
+    private void updatePlayerName(Player p, int player) {
+        System.out.print("\n**** "+ player +" player, choose your name: ");
         p.name = scanner.next();
     }
 
-
     public Coordinates stringToCoordinates(String move) {
-
         int column = Character.getNumericValue(move.charAt(0)) - this.fieldColumns;
         int row = Character.getNumericValue(move.charAt(1));
         return new Coordinates(row, column);
     }
 
     public Coordinates getPlayerMove(Player player) {
-
         String pattern = "(^[a-j][0-9]$)";
         boolean isMatch;
         String move;
-
         do {
             System.out.println("Set your move(A-J)(0-9): ");
             move = scanner.next();
             isMatch = Pattern.matches(pattern, move);
             if (isMatch == false) {
                 System.out.println("Falsche Eingabe, probier's nochmal :)");
-
             } else if (player.hasPreviouslyShotAt(stringToCoordinates(move))) {
                 System.out.println("Du hast es dort schon versucht!\n");
                 isMatch = false;
@@ -105,7 +87,6 @@ public class BattleShip_View {
 
     public boolean doMove(Player shooter, Player target, Coordinates coordinates) {
         shooter.markFieldAsShotAt(coordinates);
-
         return target.hasShipAt(coordinates);
     }
 
@@ -119,16 +100,13 @@ public class BattleShip_View {
                 }
             }
         }
-
         return this.player_a.hasPreviouslyShotAt(schiffeImSpiel) || this.player_b.hasPreviouslyShotAt(schiffeImSpiel);
     }
 
     private void gameLoop() {
         int zahlt = 0;
-
         while (!isGameOver()) {
             Player shooter, target;
-
             if (zahlt % 2 == 0) {
                 shooter = player_a;
                 target = player_b;
@@ -143,46 +121,42 @@ public class BattleShip_View {
             printBoard(shooter, target);
             Coordinates coordinates = getPlayerMove(shooter);
             boolean getroffen = doMove(shooter, target, coordinates);
-
             if (getroffen) {
                 System.out.println("Getroffen");
                 Set<Coordinates> shipCoordinates = shooter.hitsEntireShipSunk(coordinates, target);
                 if (shipCoordinates != null) {
                     System.out.println("...und versenkt!");
                     shooter.markAdjacentFieldsAsShotAt(shipCoordinates);
-
                 }
-
             } else {
                 System.out.println("Nicht getroffen!");
                 zahlt++;
             }
-
             printBoard(shooter, target);
         }
     }
 
-
     public static void main(String[] args) throws IOException {
-
-
         List<List<BattleChar>> battleFeld_a = null;
         List<List<BattleChar>> battleFeld_b = null;
-        int loadOrCreate;
-
-        do {
+        int loadOrCreate = 0;
+       do {
             System.out.print("\n** Type '1' to load the default Battlefield or type '2'to create your Battlefield:  ");
-            loadOrCreate = scanner.nextInt();
-        } while (loadOrCreate > 2);
-
+           try {
+               String test = scanner.next();
+               loadOrCreate = Integer.parseInt(test);
+           }
+           catch(NumberFormatException err) {
+               System.out.println("Not an Integer");
+           }
+        } while (loadOrCreate != 1 && loadOrCreate != 2);
         if (loadOrCreate == 1) {
-            battleFeld_a = new BattleFeldFileLoader().loadFromFile("Battleship/src/FirstPlayerBattleField");
-            battleFeld_b = new BattleFeldFileLoader().loadFromFile("Battleship/src/SecondPlayerBattleField");
+            battleFeld_a = new BattleFeldFileLoader().loadFromFile("FirstPlayerBattleField");
+            battleFeld_b = new BattleFeldFileLoader().loadFromFile("SecondPlayerBattleField");
         } else if (loadOrCreate == 2) {
             battleFeld_a = new ShipPlacer().askPlayerForShips();
             battleFeld_b = new ShipPlacer().askPlayerForShips();
         }
-
 
         BattleShip_Logic logic_a = new BattleShip_Logic(battleFeld_a);
         BattleShip_Logic logic_b = new BattleShip_Logic(battleFeld_b);
@@ -192,11 +166,10 @@ public class BattleShip_View {
 
         BattleShip_View bv = new BattleShip_View(player_a, player_b, player_a.rows(), player_a.columns());
 
-        bv.updatePlayerName(bv.player_a);
-        bv.updatePlayerName(bv.player_b);
+        bv.updatePlayerName(bv.player_a, 1);
+        bv.updatePlayerName(bv.player_b, 2);
 
         bv.gameLoop();
 
     }
-
 }
